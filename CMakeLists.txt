@@ -21,9 +21,14 @@ if (NOT SDL2_LIBRARY)
     message(FATAL_ERROR "SDL2 library not found in Homebrew directories!")
 endif()
 
-add_executable(SPH_Fluid_Simulation main.cpp
-        Vector2.h
-        Draw.h)
+add_executable(SPH_Fluid_Simulation src/main.cpp
+        include/Math/Vector2.h
+        include/Render/Draw.h
+        include/Math/Kernals.h
+        src/Simulation/Simulator.cpp
+        include/Math/Calculate.h
+        include/Variables.h
+)
 
 target_link_libraries(SPH_Fluid_Simulation
         ${SDL2_LIBRARY}

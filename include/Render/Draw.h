@@ -5,12 +5,17 @@
 #ifndef SPH_FLUID_SIMULATION_DRAW_H
 #define SPH_FLUID_SIMULATION_DRAW_H
 #include <SDL2/SDL_opengl.h>
-#include "Vector2.h"
+#include "../Math/Vector2.h"
 
-namespace draw {
+namespace Draw {
     inline void triangle(const Vector2 vertex1,
                          const Vector2 vertex2,
                          const Vector2 vertex3) {
+
+        bool nullPoint = vertex1 == NULL || vertex2 == NULL || vertex3 == NULL;
+        if (nullPoint) {
+            throw std::runtime_error("Warning: Invalid Position");
+        }
 
         glBegin(GL_TRIANGLES);
 
@@ -25,6 +30,10 @@ namespace draw {
     }
 
     inline void circle(const Vector2 position, const float radius) {
+        if (position == NULL) {
+            throw std::runtime_error("Warning: Invalid Position");
+        }
+
         const int numTriangles = radius < 50 ? 10 : static_cast<int>(radius / 3);
 
         for (int i = 0; i < numTriangles; i++) {

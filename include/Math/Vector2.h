@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+#include <random>
 
 struct Vector2 {
     float x, y;
@@ -84,7 +85,7 @@ struct Vector2 {
     [[nodiscard]]
      Vector2 operator/ (const Vector2& toDivide) const {
         if (toDivide.x == 0 || toDivide.y == 0) {
-            throw std::runtime_error("Division by zero is not allowed.");
+            throw std::runtime_error("Warning: Division by zero is not allowed.");
         }
 
         return {x / toDivide.x, y / toDivide.y};
@@ -93,7 +94,7 @@ struct Vector2 {
     [[nodiscard]]
      Vector2 operator/ (float toDivide) const {
         if (toDivide == 0) {
-            throw std::runtime_error("Division by zero is not allowed.");
+            throw std::runtime_error("Warning: Division by zero is not allowed.");
         }
 
         return {x / toDivide, y / toDivide};
@@ -101,7 +102,7 @@ struct Vector2 {
 
     void operator/= (const Vector2& toDivide) {
         if (toDivide.x == 0 || toDivide.y == 0) {
-            throw std::runtime_error("Division by zero is not allowed.");
+            throw std::runtime_error("Warning: Division by zero is not allowed.");
         }
 
         x /= toDivide.x;
@@ -110,7 +111,7 @@ struct Vector2 {
 
     void operator/= (float toDivide) {
         if (toDivide == 0.0f) {
-            throw std::runtime_error("Division by zero is not allowed.");
+            throw std::runtime_error("Warning: Division by zero is not allowed.");
         }
 
         x /= toDivide;
@@ -151,6 +152,17 @@ struct Vector2 {
 
     static constexpr Vector2 down() noexcept {
         return {0, -1};
+    }
+
+    static Vector2 randomDir() {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+
+        std::uniform_real_distribution<> dis(-1, 1);
+
+        float x = dis(gen);
+        float y = dis(gen);
+        return {x, y};
     }
 
     std::string toString() {

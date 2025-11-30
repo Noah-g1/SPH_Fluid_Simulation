@@ -1,21 +1,11 @@
-#include "Vector2.h"
-#include "Draw.h"
+#include "../include/Math/Vector2.h"
+#include "../include/Render/Draw.h"
+#include "Simulation/Simulator.cpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <iostream>
 
 int width = 1280; int height = 720;
-
-int numParticles = 100;
-
-void start() {
-    Vector2 positions[numParticles];
-    Vector2 velocities[numParticles];
-}
-
-void update() {
-    draw::circle(Vector2::zero(), 100);
-}
 
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -63,10 +53,13 @@ int main() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    bool running = true;
-    SDL_Event event;
+    Uint32 nowTickTime = SDL_GetPerformanceCounter();
+    Uint32 lastTickTime = 0;
 
-    start();
+    SDL_Event event;
+    bool running = true;
+
+    Simulator::Start();
     while (running) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -79,7 +72,12 @@ int main() {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        update();
+        lastTickTime = nowTickTime;
+        nowTickTime = SDL_GetPerformanceCounter();
+
+        deltaTime = static_cast<float>(nowTickTime - lastTickTime) * (10 / static_cast<float>(SDL_GetPerformanceFrequency()));
+
+        Simulator::Update();
 
         SDL_GL_SwapWindow(window);
     }
