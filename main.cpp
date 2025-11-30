@@ -1,12 +1,20 @@
 #include "Vector2.h"
+#include "Draw.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <iostream>
 
 int width = 1280; int height = 720;
 
-void Update() {
+int numParticles = 100;
 
+void start() {
+    Vector2 positions[numParticles];
+    Vector2 velocities[numParticles];
+}
+
+void update() {
+    draw::circle(Vector2::zero(), 100);
 }
 
 int main() {
@@ -47,10 +55,8 @@ int main() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    int halfWidth = width / 2;
-    int halfHeight = height / 2;
-    glOrtho(-halfWidth, halfWidth,
-        -halfHeight, halfHeight,
+    glOrtho(-width, width,
+        -height, height,
         -1.0, 1.0
     );
 
@@ -60,6 +66,7 @@ int main() {
     bool running = true;
     SDL_Event event;
 
+    start();
     while (running) {
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -72,7 +79,7 @@ int main() {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        Update();
+        update();
 
         SDL_GL_SwapWindow(window);
     }

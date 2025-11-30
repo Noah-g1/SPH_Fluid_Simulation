@@ -22,7 +22,8 @@ if (NOT SDL2_LIBRARY)
 endif()
 
 add_executable(SPH_Fluid_Simulation main.cpp
-        Vector2.h)
+        Vector2.h
+        Draw.h)
 
 target_link_libraries(SPH_Fluid_Simulation
         ${SDL2_LIBRARY}
