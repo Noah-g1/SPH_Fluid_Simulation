@@ -19,7 +19,7 @@ namespace Simulator {
     inline void SpawnParticles() {
         int particlesPerRow = static_cast<int>(sqrt(numParticles));
         int particlesPerCol = (numParticles - 1) / particlesPerRow + 1;
-        float spacing = particleSize * 2 + 10;
+        float spacing = particleSize * 2 + 5;
 
         for (int i = 0; i < numParticles; i++) {
             float x = (i % particlesPerRow - particlesPerRow / 2 + 0.5f) * spacing;
@@ -37,7 +37,25 @@ namespace Simulator {
     }
 
     inline void HandleBorderCollisions(int index) {
+        Vector2 &position = positions[index];
+        Vector2 &velocity = velocities[index];
 
+        Vector2 halfSize = Vector2(width, height) / 4;
+        Vector2 boxCenter = Vector2::zero();
+
+        Vector2 max = boxCenter + halfSize;
+
+        Vector2 positionSign = position.sign();
+
+        if (abs(position.x - boxCenter.x) > max.x) {
+            position.x = max.x * positionSign.x;
+            velocity.x *= -0.01f;
+        }
+
+        if (abs(position.y - boxCenter.y) > max.y) {
+            position.y = max.y * positionSign.y;
+            velocity.y *= -0.01f;
+        }
     }
 
     inline void SimulationStep() {
@@ -71,6 +89,10 @@ namespace Simulator {
     inline void Update() {
         DrawParticles();
 
-        SimulationStep();
+        try {
+            SimulationStep();
+        } catch (const std::runtime_error& e) {
+            std::cerr << e.what() << std::endl;
+        }
     }
 }

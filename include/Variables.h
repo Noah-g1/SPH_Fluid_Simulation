@@ -5,12 +5,15 @@
 #ifndef SPH_FLUID_SIMULATION_VARIABLES_H
 #define SPH_FLUID_SIMULATION_VARIABLES_H
 
-constexpr int numParticles = 100;
-constexpr float particleSize = 10;
+inline int width = 1280;
+inline int height = 720;
 
-constexpr float smoothingRadius = 100.0f;
-constexpr float targetDensity = 100.0f;
-constexpr float pressureMultiplier = 500.0f;
+constexpr int numParticles = 500;
+constexpr float particleSize = 1;
+
+constexpr float smoothingRadius = 50.0f;
+constexpr float targetDensity = 0.01f;
+constexpr float pressureMultiplier = 100.0f;
 
 constexpr float gravity = 0;
 constexpr float mass = 1;

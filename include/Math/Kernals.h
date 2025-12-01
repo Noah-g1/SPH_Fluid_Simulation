@@ -12,20 +12,22 @@ namespace Kernals {
     inline float spikyDerivativeScalingFactor;
 
     inline void calculateScalingFactors(float radius) {
-        spikyScalingFactor = static_cast<float>(15 / M_PI * std::pow(radius, 6));
-        spikyDerivativeScalingFactor = static_cast<float>(-10 / (M_PI * std::pow(radius, 6)));
+        spikyScalingFactor = static_cast<float>(6 / (M_PI * std::pow(radius, 4)));
+        spikyDerivativeScalingFactor = static_cast<float>(12 / (M_PI * std::pow(radius, 4)));
     }
 
     inline float Spiky(float distance, float radius) {
         if (distance >= radius) return 0;
 
-        return static_cast<float>(std::__math::pow(radius - distance, 3) * spikyScalingFactor);
+        const float v = radius - distance;
+        return v * v * spikyScalingFactor;
     }
 
     inline float SpikyDerivative(float distance, float radius) {
         if (distance >= radius) return 0;
 
-        return (radius - distance) * (radius - distance) * spikyDerivativeScalingFactor;
+        const float v = radius - distance;
+        return -v * spikyDerivativeScalingFactor;
     }
 }
 

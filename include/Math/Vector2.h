@@ -42,6 +42,13 @@ struct Vector2 {
         return {x / mag, y / mag};
     }
 
+    Vector2 sign() const noexcept {
+        float xSign = x == 0 ? 0 : x / abs(x);
+        float ySign = y == 0 ? 0 : y / abs(y);
+
+        return {xSign, ySign};
+    }
+
     [[nodiscard]]
     constexpr Vector2 operator+ (const Vector2& toAdd) const noexcept {
         return {x + toAdd.x, y + toAdd.y};

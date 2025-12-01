@@ -5,8 +5,6 @@
 #include <SDL2/SDL_opengl.h>
 #include <iostream>
 
-int width = 1280; int height = 720;
-
 int main() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cerr << "SDL Init Error: " << SDL_GetError() << std::endl;
@@ -45,8 +43,8 @@ int main() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glOrtho(-width, width,
-        -height, height,
+    glOrtho(-width / 4, width / 4,
+        -height / 4, height / 4,
         -1.0, 1.0
     );
 

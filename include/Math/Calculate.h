@@ -21,8 +21,6 @@ namespace Calculate {
             const float distance = (samplePosition - particlePosition).magnitude();
             const float influence = Kernals::Spiky(distance, smoothingRadius);
             density += mass * influence;
-
-            std::cout << influence << std::endl;
         }
 
         return density;
