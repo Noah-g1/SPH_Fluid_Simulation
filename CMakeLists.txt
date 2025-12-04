@@ -22,13 +22,13 @@ if (NOT SDL2_LIBRARY)
 endif()
 
 add_executable(SPH_Fluid_Simulation src/main.cpp
-        include/Structs/Vector2.h
+        include/Core/Vector2.h
         include/Render/Draw.h
-        include/Math/Kernals.h
+        include/SPH/Kernals.h
         src/Simulation/Simulator.cpp
-        include/Math/Calculate.h
+        include/SPH/Calculate.h
         include/Variables.h
-        include/Structs/Color.h
+        include/Core/Color.h
 )
 
 target_link_libraries(SPH_Fluid_Simulation

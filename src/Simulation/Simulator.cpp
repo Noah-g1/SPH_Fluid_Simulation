@@ -6,8 +6,8 @@
 #include <iostream>
 #include <SDL2/SDL_events.h>
 
-#include "../../include/Math/Kernals.h"
-#include "../../include/Math/Calculate.h"
+#include "../../include/SPH/Kernals.h"
+#include "../../include/SPH/Calculate.h"
 #include "../../include/Variables.h"
 #include "../../include/Render/Draw.h"
 

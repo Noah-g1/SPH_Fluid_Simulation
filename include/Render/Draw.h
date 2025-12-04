@@ -5,8 +5,8 @@
 #ifndef SPH_FLUID_SIMULATION_DRAW_H
 #define SPH_FLUID_SIMULATION_DRAW_H
 #include <SDL2/SDL_opengl.h>
-#include "../Structs/Vector2.h"
-#include "../Structs/Color.h"
+#include "../Core/Vector2.h"
+#include "../Core/Color.h"
 
 namespace Draw {
     inline void triangle(const Vector2 vertex1,

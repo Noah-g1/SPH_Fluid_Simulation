@@ -4,8 +4,8 @@
 
 #ifndef SPH_FLUID_SIMULATION_VARIABLES_H
 #define SPH_FLUID_SIMULATION_VARIABLES_H
-#include "Structs/Color.h"
-#include "Structs/Vector2.h"
+#include "Core/Color.h"
+#include "Core/Vector2.h"
 
 inline int width = 1280;
 inline int height = 720;
