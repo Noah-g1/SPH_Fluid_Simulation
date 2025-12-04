@@ -10,10 +10,13 @@
 namespace Kernals {
     inline float spikyScalingFactor;
     inline float spikyDerivativeScalingFactor;
+    inline float viscosityScalingFactor;
 
     inline void calculateScalingFactors(float radius) {
         spikyScalingFactor = static_cast<float>(6 / (M_PI * std::pow(radius, 4)));
         spikyDerivativeScalingFactor = static_cast<float>(12 / (M_PI * std::pow(radius, 4)));
+
+        viscosityScalingFactor = static_cast<float>(45 / (M_PI * std::pow(radius, 6)));
     }
 
     inline float Spiky(float distance, float radius) {
@@ -28,6 +31,12 @@ namespace Kernals {
 
         const float v = radius - distance;
         return -v * spikyDerivativeScalingFactor;
+    }
+
+    inline float ViscocityLaplacian(float distance, float radius) {
+        if (distance >= radius) return 0;
+
+        return (radius - distance) * viscosityScalingFactor;
     }
 }
 

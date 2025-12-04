@@ -1,4 +1,3 @@
-#include "../include/Math/Vector2.h"
 #include "../include/Render/Draw.h"
 #include "Simulation/Simulator.cpp"
 #include <SDL2/SDL.h>
@@ -43,8 +42,8 @@ int main() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glOrtho(-width / 4, width / 4,
-        -height / 4, height / 4,
+    glOrtho(-width * windowScaling, width * windowScaling,
+        -height * windowScaling, height * windowScaling,
         -1.0, 1.0
     );
 
@@ -53,6 +52,8 @@ int main() {
 
     Uint32 nowTickTime = SDL_GetPerformanceCounter();
     Uint32 lastTickTime = 0;
+
+    SDL_KeyCode key_code;
 
     SDL_Event event;
     bool running = true;
@@ -64,6 +65,18 @@ int main() {
                 case SDL_QUIT:
                     running = false;
                     break;
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == 13) {
+                        simulationStarted = !simulationStarted;
+                    }
+
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    mouseDown = true;
+                    break;
+                case SDL_MOUSEBUTTONUP:
+                    mouseDown = false;
+                    break;
             }
         }
 
@@ -74,6 +87,16 @@ int main() {
         nowTickTime = SDL_GetPerformanceCounter();
 
         deltaTime = static_cast<float>(nowTickTime - lastTickTime) * (10 / static_cast<float>(SDL_GetPerformanceFrequency()));
+
+        if (mouseDown) {
+            Uint32 mouseState = SDL_GetMouseState(&mouseX, &mouseY);
+            //SDL_GetWindowPosition(window, &windowX, &windowY);
+
+            mouseX -= width / 2;
+            mouseX *= windowScaling * 2;
+            mouseY -= height / 2;
+            mouseY *= -windowScaling * 2;
+        }
 
         Simulator::Update();
 

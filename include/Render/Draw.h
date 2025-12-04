@@ -5,12 +5,14 @@
 #ifndef SPH_FLUID_SIMULATION_DRAW_H
 #define SPH_FLUID_SIMULATION_DRAW_H
 #include <SDL2/SDL_opengl.h>
-#include "../Math/Vector2.h"
+#include "../Structs/Vector2.h"
+#include "../Structs/Color.h"
 
 namespace Draw {
     inline void triangle(const Vector2 vertex1,
                          const Vector2 vertex2,
-                         const Vector2 vertex3) {
+                         const Vector2 vertex3,
+                         const Color color) {
 
         bool nullPoint = vertex1 == NULL || vertex2 == NULL || vertex3 == NULL;
         if (nullPoint) {
@@ -19,7 +21,7 @@ namespace Draw {
 
         glBegin(GL_TRIANGLES);
 
-        glColor3f(1.0f, 1.0f, 1.0f);
+        glColor3f(color.red, color.green, color.blue);
         glVertex2f(vertex1.x, vertex1.y);
 
         glVertex2f(vertex2.x, vertex2.y);
@@ -29,7 +31,8 @@ namespace Draw {
         glEnd();
     }
 
-    inline void circle(const Vector2 position, const float radius) {
+    inline void circle(const Vector2 position, const float radius,
+                       const Color color) {
         if (position == NULL) {
             throw std::runtime_error("Warning: Invalid Position");
         }
@@ -46,7 +49,7 @@ namespace Draw {
             const float x2 = position.x + radius * cos(angle2);
             const float y2 = position.y + radius * sin(angle2);
 
-            triangle(position, Vector2(x1, y1), Vector2(x2, y2));
+            triangle(position, Vector2(x1, y1), Vector2(x2, y2), color);
         }
     }
 }

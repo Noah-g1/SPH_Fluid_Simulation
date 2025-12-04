@@ -4,22 +4,44 @@
 
 #ifndef SPH_FLUID_SIMULATION_VARIABLES_H
 #define SPH_FLUID_SIMULATION_VARIABLES_H
+#include "Structs/Color.h"
+#include "Structs/Vector2.h"
 
 inline int width = 1280;
 inline int height = 720;
+inline float windowScaling = (1.0 / 10);
+
+inline int mouseX, mouseY;
+inline int windowX, windowY;
+
+inline bool simulationStarted = false;
+inline bool mouseDown = false;
+
+inline Color fastColor = Color(1.0, 0.25, 0);
+inline Color midSpeedColor = Color(0, 1, 0.5);
+inline Color slowColor = Color(0, 0.25, 1.0);
 
 constexpr int numParticles = 500;
 constexpr float particleSize = 1;
 
-constexpr float smoothingRadius = 50.0f;
-constexpr float targetDensity = 0.01f;
-constexpr float pressureMultiplier = 100.0f;
+constexpr float smoothingRadius = 10;
+constexpr float targetDensity = 0.04;
+constexpr float pressureMultiplier = 50;
+constexpr float viscosityMultiplier = 1;
 
-constexpr float gravity = 0;
+constexpr float mousePullRadius = 50;
+constexpr float mousePullMultiplier = 0.05;
+
+constexpr float gravity = 0.5;
 constexpr float mass = 1;
 
-inline float densities[numParticles];
-
 inline float deltaTime = 0;
+
+inline Vector2 positions[numParticles];
+inline Vector2 predictedPositions[numParticles];
+
+inline Vector2 velocities[numParticles];
+
+inline float densities[numParticles];
 
 #endif //SPH_FLUID_SIMULATION_VARIABLES_H

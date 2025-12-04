@@ -4,7 +4,6 @@
 
 #ifndef SPH_FLUID_SIMULATION_SIMULATOR_H
 #define SPH_FLUID_SIMULATION_SIMULATOR_H
-#include "Vector2.h"
 #include "Kernals.h"
 #include "../Variables.h"
 
@@ -58,6 +57,50 @@ namespace Calculate {
         }
 
         return pressureForce;
+    }
+
+    inline Vector2 ViscosityForce(int sampleIndex, Vector2 positionsToCheck[]) {
+        Vector2 viscosityForce;
+
+        Vector2 samplePosition = positionsToCheck[sampleIndex];
+        Vector2 sampleVelocity = velocities[sampleIndex];
+
+        for (int j = 0; j < numParticles; j++) {
+            if (sampleIndex == j) continue;
+
+            Vector2 velocityDifference = velocities[j] - sampleVelocity;
+
+            Vector2 offset = samplePosition - positionsToCheck[j];
+            float distance = offset.magnitude();
+            float laplacian = Kernals::ViscocityLaplacian(distance, smoothingRadius);
+
+            float density = densities[j];
+
+            viscosityForce += velocityDifference * laplacian * mass / density;
+        }
+
+        return viscosityForce * viscosityMultiplier;
+    }
+
+    inline Vector2 ExternalForce(int sampleIndex, Vector2 forcePosition) {
+        const Vector2 offset = predictedPositions[sampleIndex] - forcePosition;
+        const float distance = offset.magnitude();
+
+        if (distance > mousePullRadius) return Vector2::zero();
+
+        const Vector2 normal = offset.normalize();
+
+        return normal * -mousePullMultiplier;
+    }
+
+    inline Color ColorFromVelocity(Vector2 velocity) {
+        const float speed = velocity.magnitude();
+
+        const float interpolation = std::min(speed / 5.0f, 1.0f);
+
+        if (interpolation > 0.4) return Color::Lerp(midSpeedColor, fastColor, interpolation);
+
+        return Color::Lerp(slowColor, midSpeedColor, interpolation);
     }
 }
 
