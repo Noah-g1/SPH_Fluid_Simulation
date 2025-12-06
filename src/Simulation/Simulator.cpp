@@ -57,7 +57,7 @@ namespace Simulator {
     }
 
     inline void SimulationStep() {
-        Vector2 gravityVector = Vector2::down() * (gravity * deltaTime);
+        const Vector2 gravityVector = Vector2::down() * (gravity * deltaTime);
 
         for (int i = 0; i < numParticles; i++) {
             velocities[i] += gravityVector;
@@ -65,7 +65,8 @@ namespace Simulator {
         }
 
         for (int i = 0; i < numParticles; i++) {
-            densities[i] = Calculate::Density(i, predictedPositions);
+            densities[i][0] = Calculate::Density(i, predictedPositions);
+            densities[i][1] = Calculate::NearDensity(i, predictedPositions);
         }
 
         for (int i = 0; i < numParticles; i++) {
@@ -77,7 +78,12 @@ namespace Simulator {
                 mouseForce = Calculate::ExternalForce(i, Vector2(mouseX, mouseY));
             }
 
-            velocities[i] += (pressureForce + viscosityForce + mouseForce) * deltaTime / densities[i];
+            velocities[i] += (pressureForce + viscosityForce + mouseForce) * deltaTime / densities[i][0];
+
+            Vector2 nearPressure = Calculate::NearPressureForce(i, predictedPositions);
+            Vector2 nearPressureAcceleration = nearPressure * deltaTime / densities[i][1];
+
+            velocities[i] += nearPressureAcceleration;
         }
 
         for (int i = 0; i < numParticles; i++) {
@@ -87,7 +93,7 @@ namespace Simulator {
     }
 
     inline void Start() {
-        Kernals::calculateScalingFactors(smoothingRadius);
+        Kernels::calculateScalingFactors(smoothingRadius);
 
         SpawnParticles();
     }

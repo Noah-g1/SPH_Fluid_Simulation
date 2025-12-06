@@ -29,6 +29,7 @@ add_executable(SPH_Fluid_Simulation src/main.cpp
         include/SPH/Calculate.h
         include/Variables.h
         include/Core/Color.h
+        include/SpacialHash/SpacialHash.h
 )
 
 target_link_libraries(SPH_Fluid_Simulation

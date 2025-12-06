@@ -7,33 +7,54 @@
 #include <__math/exponential_functions.h>
 #include <cmath>
 
-namespace Kernals {
+namespace Kernels {
     inline float spikyScalingFactor;
     inline float spikyDerivativeScalingFactor;
+
+    inline float nearSpikyScalingFactor;
+    inline float nearSpikyDerivativeScalingFactor;
+
     inline float viscosityScalingFactor;
 
-    inline void calculateScalingFactors(float radius) {
+    inline void calculateScalingFactors(const float radius) {
         spikyScalingFactor = static_cast<float>(6 / (M_PI * std::pow(radius, 4)));
         spikyDerivativeScalingFactor = static_cast<float>(12 / (M_PI * std::pow(radius, 4)));
+
+        nearSpikyScalingFactor = static_cast<float>(10 / (M_PI * std::pow(radius, 5)));
+        nearSpikyDerivativeScalingFactor = static_cast<float>(30 / (M_PI * std::pow(radius, 5)));
 
         viscosityScalingFactor = static_cast<float>(45 / (M_PI * std::pow(radius, 6)));
     }
 
-    inline float Spiky(float distance, float radius) {
+    inline float Spiky(const float distance, const float radius) {
         if (distance >= radius) return 0;
 
         const float v = radius - distance;
         return v * v * spikyScalingFactor;
     }
 
-    inline float SpikyDerivative(float distance, float radius) {
+    inline float NearSpiky(const float distance, const float radius) {
+        if (distance >= radius) return 0;
+
+        const float v = radius - distance;
+        return v * v * v * nearSpikyScalingFactor;
+    }
+
+    inline float SpikyDerivative(const float distance, const float radius) {
         if (distance >= radius) return 0;
 
         const float v = radius - distance;
         return -v * spikyDerivativeScalingFactor;
     }
 
-    inline float ViscocityLaplacian(float distance, float radius) {
+    inline float NearSpikyDerivative(const float distance, const float radius) {
+        if (distance >= radius) return 0;
+
+        const float v = radius - distance;
+        return -v * v * nearSpikyDerivativeScalingFactor;
+    }
+
+    inline float ViscosityLaplacian(const float distance, const float radius) {
         if (distance >= radius) return 0;
 
         return (radius - distance) * viscosityScalingFactor;

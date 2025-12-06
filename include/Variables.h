@@ -24,15 +24,15 @@ inline Color slowColor = Color(0, 0.25, 1.0);
 constexpr int numParticles = 500;
 constexpr float particleSize = 1;
 
-constexpr float smoothingRadius = 10;
-constexpr float targetDensity = 0.04;
-constexpr float pressureMultiplier = 50;
-constexpr float viscosityMultiplier = 1;
+constexpr float smoothingRadius = 20;
+constexpr float targetDensity = 0.035;
+constexpr float pressureMultiplier = 200;
+constexpr float viscosityMultiplier = 5;
 
 constexpr float mousePullRadius = 50;
 constexpr float mousePullMultiplier = 0.05;
 
-constexpr float gravity = 0.5;
+constexpr float gravity = 0.9;
 constexpr float mass = 1;
 
 inline float deltaTime = 0;
@@ -42,6 +42,6 @@ inline Vector2 predictedPositions[numParticles];
 
 inline Vector2 velocities[numParticles];
 
-inline float densities[numParticles];
+inline float densities[numParticles][2];
 
 #endif //SPH_FLUID_SIMULATION_VARIABLES_H
