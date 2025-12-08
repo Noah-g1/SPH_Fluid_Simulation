@@ -15,7 +15,7 @@ namespace Simulator {
     inline void SpawnParticles() {
         int particlesPerRow = static_cast<int>(sqrt(numParticles));
         int particlesPerCol = (numParticles - 1) / particlesPerRow + 1;
-        float spacing = particleSize * 2 + 2;
+        float spacing = particleSize + 2;
 
         for (int i = 0; i < numParticles; i++) {
             float x = (i % particlesPerRow - particlesPerRow / 2 + 0.5f) * spacing;
@@ -38,7 +38,7 @@ namespace Simulator {
         Vector2 &position = positions[index];
         Vector2 &velocity = velocities[index];
 
-        Vector2 halfSize = Vector2(width / 4, height / 4) / 4;
+        Vector2 halfSize = Vector2(width / 3, height / 3) / 4;
         Vector2 boxCenter = Vector2::zero();
 
         Vector2 max = boxCenter + halfSize;

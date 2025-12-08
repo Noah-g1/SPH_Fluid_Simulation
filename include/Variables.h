@@ -22,15 +22,15 @@ inline Color midSpeedColor = Color(0, 1, 0.5);
 inline Color slowColor = Color(0, 0.25, 1.0);
 
 constexpr int numParticles = 500;
-constexpr float particleSize = 1;
+constexpr float particleSize = 1.5;
 
 constexpr float smoothingRadius = 20;
 constexpr float targetDensity = 0.035;
 constexpr float pressureMultiplier = 200;
-constexpr float viscosityMultiplier = 5;
+constexpr float viscosityMultiplier = 2;
 
-constexpr float mousePullRadius = 50;
-constexpr float mousePullMultiplier = 0.05;
+constexpr float mousePullRadius = 100;
+constexpr float mousePullMultiplier = 0.06;
 
 constexpr float gravity = 0.9;
 constexpr float mass = 1;
